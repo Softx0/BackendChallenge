@@ -1,12 +1,7 @@
 ﻿using BackendChallenge.Application.WaterJug.Dto;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BackendChallenge.Application.WaterJug.Query
+namespace BackendChallenge.Application.WaterJug.Queries
 {
     public class GetSolveWaterJugChallengeQuery : IRequest<WaterJugResponseDto>
     {

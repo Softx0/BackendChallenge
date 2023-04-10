@@ -1,10 +1,5 @@
 ﻿using BackendChallenge.Application.WaterJug.Dto;
-using BackendChallenge.Application.WaterJug.Query;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BackendChallenge.Application.WaterJug.Queries;
 
 namespace BackendChallenge.Application.WaterJug.Interfaces
 {

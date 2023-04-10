@@ -1,10 +1,8 @@
 ﻿
+using BackendChallenge.Application.WaterJug.Handler;
+using BackendChallenge.Application.WaterJug.Interfaces;
+using BackendChallenge.Infraestructure.Services;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BackendChallenge.Infraestructure
 {
@@ -12,6 +10,7 @@ namespace BackendChallenge.Infraestructure
     {
         public static IServiceCollection AddInfraestructure(this IServiceCollection services)
         {
+            services.AddTransient<IWaterJug, WaterJugService>();
             return services;
         }
     }

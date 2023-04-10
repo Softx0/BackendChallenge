@@ -1,12 +1,7 @@
 ﻿using BackendChallenge.Application.WaterJug.Dto;
 using BackendChallenge.Application.WaterJug.Interfaces;
-using BackendChallenge.Application.WaterJug.Query;
+using BackendChallenge.Application.WaterJug.Queries;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BackendChallenge.Application.WaterJug.Handler
 {
@@ -18,9 +13,9 @@ namespace BackendChallenge.Application.WaterJug.Handler
             this.waterJugService = waterJugService;
         }
 
-        public async Task<WaterJugResponseDto> Handle(GetSolveWaterJugChallengeQuery request, CancellationToken cancellationToken)
+        public Task<WaterJugResponseDto> Handle(GetSolveWaterJugChallengeQuery request, CancellationToken cancellationToken)
         {
-            var result = await waterJugService.GetSolveWaterJugChallenge(request);
+            var result = waterJugService.GetSolveWaterJugChallenge(request);
             return result;
         }
     }

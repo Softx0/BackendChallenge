@@ -1,6 +1,6 @@
 ﻿using BackendChallenge.Application.WaterJug.Dto;
 using BackendChallenge.Application.WaterJug.Interfaces;
-using BackendChallenge.Application.WaterJug.Query;
+using BackendChallenge.Application.WaterJug.Queries;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +11,6 @@ namespace BackendChallenge.Infraestructure.Services
 {
     public class WaterJugService : IWaterJug
     {
-
-
         public static WaterJugResponseDto GetResiduo(GetSolveWaterJugChallengeQuery getSolveWaterJugChallengeQuery)
         {
             int cociente = Math.DivRem(getSolveWaterJugChallengeQuery.BucketX, getSolveWaterJugChallengeQuery.BucketY, out int residuo);
@@ -26,9 +24,9 @@ namespace BackendChallenge.Infraestructure.Services
             return result;
         }
 
-        public async Task<WaterJugResponseDto> GetSolveWaterJugChallenge(GetSolveWaterJugChallengeQuery getSolveWaterJugChallengeQuery)
+        public Task<WaterJugResponseDto> GetSolveWaterJugChallenge(GetSolveWaterJugChallengeQuery getSolveWaterJugChallengeQuery)
         {
-            return await Task.FromResult(GetResiduo(getSolveWaterJugChallengeQuery));
+            return Task.FromResult(GetResiduo(getSolveWaterJugChallengeQuery));
         }
     }
 }

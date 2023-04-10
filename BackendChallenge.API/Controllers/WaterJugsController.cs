@@ -1,4 +1,5 @@
-﻿using BackendChallenge.Application.WaterJug.Query;
+﻿using BackendChallenge.Application.WaterJug.Dto;
+using BackendChallenge.Application.WaterJug.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,7 +18,9 @@ namespace BackendChallenge.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetSolveWaterJugChallenge([FromQuery] GetSolveWaterJugChallengeQuery getSolveWaterJugChallengeQuery)
+        [ProducesResponseType(typeof(WaterJugResponseDto), Constants.StatusCode.Status200OK)]
+        [ProducesResponseType(Constants.StatusCode.Status400BadRequest)]
+        public async Task<IActionResult> GetSolveWaterJugChallenge([FromQuery] GetSolveWaterJugChallengeQuery getSolveWaterJugChallengeQuery)
         {
             var result = await _mediator.Send(getSolveWaterJugChallengeQuery);
             return Ok(result);
