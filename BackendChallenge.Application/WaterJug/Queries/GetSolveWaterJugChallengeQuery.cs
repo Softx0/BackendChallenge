@@ -3,7 +3,7 @@ using MediatR;
 
 namespace BackendChallenge.Application.WaterJug.Queries
 {
-    public class GetSolveWaterJugChallengeQuery : IRequest<WaterJugResponseDto>
+    public class GetSolveWaterJugChallengeQuery : IRequest<List<WaterJugResponseDto>>
     {
         public int BucketX { get; set; }
         public int BucketY { get; set; }

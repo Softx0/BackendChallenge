@@ -5,6 +5,6 @@ namespace BackendChallenge.Application.WaterJug.Interfaces
 {
     public interface IWaterJug
     {
-        Task<WaterJugResponseDto> GetSolveWaterJugChallenge(GetSolveWaterJugChallengeQuery getSolveWaterJugChallengeQuery);
+        Task<List<WaterJugResponseDto>> GetSolveWaterJugChallenge(GetSolveWaterJugChallengeQuery getSolveWaterJugChallengeQuery);
     }
 }

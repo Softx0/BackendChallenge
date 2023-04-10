@@ -18,7 +18,7 @@ namespace BackendChallenge.API.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(WaterJugResponseDto), Constants.StatusCode.Status200OK)]
+        [ProducesResponseType(typeof(List<WaterJugResponseDto>), Constants.StatusCode.Status200OK)]
         [ProducesResponseType(Constants.StatusCode.Status400BadRequest)]
         public async Task<IActionResult> GetSolveWaterJugChallenge([FromQuery] GetSolveWaterJugChallengeQuery getSolveWaterJugChallengeQuery)
         {

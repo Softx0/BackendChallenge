@@ -11,7 +11,7 @@ namespace BackendChallenge.Infraestructure.Services
 {
     public class WaterJugService : IWaterJug
     {
-        public static WaterJugResponseDto GetResiduo(GetSolveWaterJugChallengeQuery getSolveWaterJugChallengeQuery)
+        public static List<WaterJugResponseDto> GetResiduo(GetSolveWaterJugChallengeQuery getSolveWaterJugChallengeQuery)
         {
             int cociente = Math.DivRem(getSolveWaterJugChallengeQuery.BucketX, getSolveWaterJugChallengeQuery.BucketY, out int residuo);
 
@@ -21,10 +21,14 @@ namespace BackendChallenge.Infraestructure.Services
                 BucketY = residuo
             };
 
-            return result;
+            List<WaterJugResponseDto> waterJugResponseDtoList = new();
+
+            waterJugResponseDtoList.Add(result);
+
+            return waterJugResponseDtoList;
         }
 
-        public Task<WaterJugResponseDto> GetSolveWaterJugChallenge(GetSolveWaterJugChallengeQuery getSolveWaterJugChallengeQuery)
+        public Task<List<WaterJugResponseDto>> GetSolveWaterJugChallenge(GetSolveWaterJugChallengeQuery getSolveWaterJugChallengeQuery)
         {
             return Task.FromResult(GetResiduo(getSolveWaterJugChallengeQuery));
         }
