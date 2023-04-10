@@ -21,9 +21,10 @@ namespace BackendChallenge.Infraestructure.Services
                 BucketY = residuo
             };
 
-            List<WaterJugResponseDto> waterJugResponseDtoList = new();
-
-            waterJugResponseDtoList.Add(result);
+            List<WaterJugResponseDto> waterJugResponseDtoList = new()
+            {
+                result
+            };
 
             return waterJugResponseDtoList;
         }
