@@ -45,7 +45,6 @@ namespace BackendChallenge.Infraestructure.Services
 
             if (getSolveWaterJugChallengeQuery.BucketX > getSolveWaterJugChallengeQuery.BucketY)
             {
-
                 jugLarge.Bucket = "X";
                 jugLarge.Value = getSolveWaterJugChallengeQuery.BucketX;
 
@@ -80,11 +79,11 @@ namespace BackendChallenge.Infraestructure.Services
                         quantityWaterJugLarge = jugLarge.Value;
                         counter += 1;
 
-                        waterJugResponseDto.BucketLarger.Bucket = jugLarge.Bucket;
-                        waterJugResponseDto.BucketLarger.Value = quantityWaterJugLarge;
+                        waterJugResponseDto.BucketOne.Bucket = jugLarge.Bucket;
+                        waterJugResponseDto.BucketOne.Value = quantityWaterJugLarge;
 
-                        waterJugResponseDto.BucketSmaller.Bucket = jugSmall.Bucket;
-                        waterJugResponseDto.BucketSmaller.Value = quantityWaterJugSmall;
+                        waterJugResponseDto.BucketTwo.Bucket = jugSmall.Bucket;
+                        waterJugResponseDto.BucketTwo.Value = quantityWaterJugSmall;
                         waterJugResponseDto.Explanation = $"Fill bucket impar {jugLarge.Bucket}";
 
                         waterJugResponseDtoList.Add(waterJugResponseDto);
@@ -97,11 +96,11 @@ namespace BackendChallenge.Infraestructure.Services
                         quantityWaterJugSmall = 0;
                         counter += 1;
 
-                        waterJugResponseDto.BucketLarger.Bucket = jugLarge.Bucket;
-                        waterJugResponseDto.BucketLarger.Value = quantityWaterJugLarge;
+                        waterJugResponseDto.BucketOne.Bucket = jugLarge.Bucket;
+                        waterJugResponseDto.BucketOne.Value = quantityWaterJugLarge;
 
-                        waterJugResponseDto.BucketSmaller.Bucket = jugSmall.Bucket;
-                        waterJugResponseDto.BucketSmaller.Value = quantityWaterJugSmall;
+                        waterJugResponseDto.BucketTwo.Bucket = jugSmall.Bucket;
+                        waterJugResponseDto.BucketTwo.Value = quantityWaterJugSmall;
                         waterJugResponseDto.Explanation = $"Dumb/Pour bucket {jugSmall.Bucket} ";
 
                         waterJugResponseDtoList.Add(waterJugResponseDto);
@@ -119,11 +118,11 @@ namespace BackendChallenge.Infraestructure.Services
 
                         Console.WriteLine($"Paso #{counter} Bucket {jugLarge.Bucket} {quantityWaterJugLarge} Bucket {jugSmall.Bucket} {quantityWaterJugSmall} Transfer bucket {jugLarge.Bucket} to bucket {jugSmall.Bucket} \n\n");
 
-                        waterJugResponseDto.BucketLarger.Bucket = jugLarge.Bucket;
-                        waterJugResponseDto.BucketLarger.Value = quantityWaterJugLarge;
+                        waterJugResponseDto.BucketOne.Bucket = jugLarge.Bucket;
+                        waterJugResponseDto.BucketOne.Value = quantityWaterJugLarge;
 
-                        waterJugResponseDto.BucketSmaller.Bucket = jugSmall.Bucket;
-                        waterJugResponseDto.BucketSmaller.Value = quantityWaterJugSmall;
+                        waterJugResponseDto.BucketTwo.Bucket = jugSmall.Bucket;
+                        waterJugResponseDto.BucketTwo.Value = quantityWaterJugSmall;
                         waterJugResponseDto.Explanation = $"Transfer bucket {jugLarge.Bucket} to bucket {jugSmall.Bucket}";
 
                         waterJugResponseDtoList.Add(waterJugResponseDto);
@@ -136,11 +135,11 @@ namespace BackendChallenge.Infraestructure.Services
                         quantityWaterJugLarge = jugSmall.Value;
                         counter += 1;
 
-                        waterJugResponseDto.BucketLarger.Bucket = jugLarge.Bucket;
-                        waterJugResponseDto.BucketLarger.Value = quantityWaterJugSmall;
+                        waterJugResponseDto.BucketOne.Bucket = jugLarge.Bucket;
+                        waterJugResponseDto.BucketOne.Value = quantityWaterJugSmall;
 
-                        waterJugResponseDto.BucketSmaller.Bucket = jugSmall.Bucket;
-                        waterJugResponseDto.BucketSmaller.Value = quantityWaterJugLarge;
+                        waterJugResponseDto.BucketTwo.Bucket = jugSmall.Bucket;
+                        waterJugResponseDto.BucketTwo.Value = quantityWaterJugLarge;
                         waterJugResponseDto.Explanation = $"Fill bucket par {jugSmall.Bucket}";
 
                         waterJugResponseDtoList.Add(waterJugResponseDto);
@@ -153,11 +152,11 @@ namespace BackendChallenge.Infraestructure.Services
                         quantityWaterJugSmall = 0;
                         counter += 1;
 
-                        waterJugResponseDto.BucketLarger.Bucket = jugLarge.Bucket;
-                        waterJugResponseDto.BucketLarger.Value = quantityWaterJugSmall;
+                        waterJugResponseDto.BucketOne.Bucket = jugLarge.Bucket;
+                        waterJugResponseDto.BucketOne.Value = quantityWaterJugSmall;
 
-                        waterJugResponseDto.BucketSmaller.Bucket = jugSmall.Bucket;
-                        waterJugResponseDto.BucketSmaller.Value = quantityWaterJugLarge;
+                        waterJugResponseDto.BucketTwo.Bucket = jugSmall.Bucket;
+                        waterJugResponseDto.BucketTwo.Value = quantityWaterJugLarge;
                         waterJugResponseDto.Explanation = $"Dumb/Pour bucket {jugSmall.Bucket} ";
 
                         waterJugResponseDtoList.Add(waterJugResponseDto);
@@ -175,11 +174,11 @@ namespace BackendChallenge.Infraestructure.Services
 
                         Console.WriteLine($"Paso #{counter} Bucket {jugSmall.Bucket} {quantityWaterJugLarge} Bucket {jugLarge.Bucket} {quantityWaterJugSmall} Transfer bucket {jugSmall.Bucket} to bucket {jugLarge.Bucket} \n\n");
 
-                        waterJugResponseDto.BucketLarger.Bucket = jugLarge.Bucket;
-                        waterJugResponseDto.BucketLarger.Value = quantityWaterJugSmall;
+                        waterJugResponseDto.BucketOne.Bucket = jugLarge.Bucket;
+                        waterJugResponseDto.BucketOne.Value = quantityWaterJugSmall;
 
-                        waterJugResponseDto.BucketSmaller.Bucket = jugSmall.Bucket;
-                        waterJugResponseDto.BucketSmaller.Value = quantityWaterJugLarge;
+                        waterJugResponseDto.BucketTwo.Bucket = jugSmall.Bucket;
+                        waterJugResponseDto.BucketTwo.Value = quantityWaterJugLarge;
                         waterJugResponseDto.Explanation = $"Transfer bucket {jugSmall.Bucket} to bucket {jugLarge.Bucket}";
 
                         waterJugResponseDtoList.Add(waterJugResponseDto);
