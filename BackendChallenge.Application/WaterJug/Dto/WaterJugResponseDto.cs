@@ -1,9 +1,11 @@
-﻿namespace BackendChallenge.Application.WaterJug.Dto
+﻿using BackendChallenge.Domain.Entities;
+
+namespace BackendChallenge.Application.WaterJug.Dto
 {
     public class WaterJugResponseDto
     {
         public string Explanation { get; set; } = null!;
-        public int BucketX { get; set; }
-        public int BucketY { get; set; }
+        public Jug? BucketLarger { get; set; } = new Jug();
+        public Jug? BucketSmaller { get; set; } = new Jug();
     }
 }

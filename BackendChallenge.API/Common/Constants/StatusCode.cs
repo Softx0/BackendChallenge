@@ -1,4 +1,4 @@
-﻿namespace BackendChallenge.API.Constants
+﻿namespace BackendChallenge.API.Common.Constants
 {
     public static class StatusCode
     {
