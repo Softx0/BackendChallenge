@@ -23,7 +23,7 @@ docker build -t backend_challenge:dev -f Dockerfile .
 docker run -dp 5001:80 --name backend_challenge_api backend_challenge:dev
 ```
 
-## Arquitecture
+## Architecture
 
 ### Clean Architecture
 
