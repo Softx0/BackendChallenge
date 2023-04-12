@@ -14,13 +14,13 @@
 2. Go to root, and build the Docker image
 
 ```
-docker build -t backend-challenge:dev -f Dockerfile .
+docker build -t backend_challenge:dev -f Dockerfile .
 ```
 
 3. Run image
 
 ```
-docker run -dp 5001:80 --name backend-challenge backend-challenge:dev
+docker run -dp 5001:80 --name backend_challenge_api backend_challenge:dev
 ```
 
 ## Arquitecture

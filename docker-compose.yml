@@ -1,0 +1,18 @@
+version: "3.7"
+services:
+  api:
+    image: backend_challenge:dev
+    container_name: backend_challenge_api
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    restart: on-failure:5
+    ports:
+      - 5001:80
+    environment:
+      ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT}
