@@ -2,6 +2,7 @@
 using BackendChallenge.Application.WaterJug.Interfaces;
 using BackendChallenge.Application.WaterJug.Queries;
 using BackendChallenge.Domain.Entities;
+using BackendChallenge.Infraestructure.Common.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,36 +14,8 @@ namespace BackendChallenge.Infraestructure.Services
 {
     public class WaterJugService : IWaterJug
     {
-        private static int MCD(int a, int b)
+        private static void SetTheLargestAndSmallestJug(GetSolveWaterJugChallengeQuery getSolveWaterJugChallengeQuery, Jug jugLarge, Jug jugSmall)
         {
-            if (b == 0)
-            {
-                return a;
-            }
-            else
-            {
-                return MCD(b, a % b);
-            }
-        }
-        private static bool getEvenOrOddOfMCD(Jug jugLarge, Jug jugSmall)
-        {
-            return MCD(jugLarge.Value, jugSmall.Value) % 2 == 0;
-        }
-
-        public static List<WaterJugResponseDto> GetSolveStepsWaterJugChallenge(GetSolveWaterJugChallengeQuery getSolveWaterJugChallengeQuery)
-        {
-
-            List<WaterJugResponseDto> waterJugResponseDtoList = new();
-
-            // Initialize two quantities jugs empties
-            int quantityWaterJugLarge = 0;
-            int quantityWaterJugSmall = 0;
-            int counter = 0;
-
-            // Initialize two instances of Jug
-            Jug jugLarge = new();
-            Jug jugSmall = new();
-
             if (getSolveWaterJugChallengeQuery.BucketX > getSolveWaterJugChallengeQuery.BucketY)
             {
                 jugLarge.Bucket = "X";
@@ -59,54 +32,70 @@ namespace BackendChallenge.Infraestructure.Services
                 jugSmall.Bucket = "X";
                 jugSmall.Value = getSolveWaterJugChallengeQuery.BucketX;
             }
+        }
+
+        private static void SetEvenStep(int quantityWaterJugLarge, int quantityWaterJugSmall, bool isTransition, Jug jugLarge, Jug jugSmall, WaterJugResponseDto waterJugResponseDto, string step = null)
+        {
+            waterJugResponseDto.BucketOne.Bucket = jugLarge.Bucket;
+            waterJugResponseDto.BucketOne.Value = quantityWaterJugLarge;
+
+            waterJugResponseDto.BucketTwo.Bucket = jugSmall.Bucket;
+            waterJugResponseDto.BucketTwo.Value = quantityWaterJugSmall;
+
+            var explanation = isTransition ? $"Transfer bucket {jugLarge.Bucket} to bucket {jugSmall.Bucket}" : $"{step} {jugLarge.Bucket}";
+            waterJugResponseDto.Explanation = explanation;
+        }
+
+        private static void SetOddStep(int quantityWaterJugLarge, int quantityWaterJugSmall, bool isTransition, Jug jugLarge, Jug jugSmall, WaterJugResponseDto waterJugResponseDto, string step = null)
+        {
+            waterJugResponseDto.BucketOne.Bucket = jugLarge.Bucket;
+            waterJugResponseDto.BucketOne.Value = quantityWaterJugSmall;
+
+            waterJugResponseDto.BucketTwo.Bucket = jugSmall.Bucket;
+            waterJugResponseDto.BucketTwo.Value = quantityWaterJugLarge;
+
+            var explanation = isTransition ? $"Transfer bucket {jugSmall.Bucket} to bucket {jugLarge.Bucket}" : $"{step} {jugSmall.Bucket}";
+            waterJugResponseDto.Explanation = explanation;
+        }
+
+        private static List<WaterJugResponseDto> GetSolveStepsWaterJugChallenge(GetSolveWaterJugChallengeQuery getSolveWaterJugChallengeQuery)
+        {
+            List<WaterJugResponseDto> waterJugResponseDtoList = new();
+
+            // Initialize two quantities jugs empties
+            int quantityWaterJugLarge = 0;
+            int quantityWaterJugSmall = 0;
+
+            // Initialize two instances of Jug
+            Jug jugLarge = new();
+            Jug jugSmall = new();
+            SetTheLargestAndSmallestJug(getSolveWaterJugChallengeQuery, jugLarge, jugSmall);
 
             // Utilizar el algoritmo de Euclides para encontrar la solución general
             while (quantityWaterJugLarge != getSolveWaterJugChallengeQuery.BucketZ &&
                    quantityWaterJugSmall != getSolveWaterJugChallengeQuery.BucketZ)
             {
-                WaterJugResponseDto waterJugResponseDto = new WaterJugResponseDto();
+                WaterJugResponseDto waterJugResponseDto = new();
 
-                Console.WriteLine($"\nPote grande = {quantityWaterJugLarge}");
-                Console.WriteLine($"Pote pequeño = {quantityWaterJugSmall}");
-                Console.WriteLine($"Z = {getSolveWaterJugChallengeQuery.BucketZ}");
-
-                Console.WriteLine(getEvenOrOddOfMCD(jugLarge, jugSmall)); // ME DEVUELVE TRUE SI ES PAR | ME DEVUELVE FALSE SI ES IMPAR
-
-                if (!getEvenOrOddOfMCD(jugLarge, jugSmall))
+                if (!MathematicsUtils.GetEvenOrOddOfMCD(jugLarge, jugSmall))
                 {
                     if (quantityWaterJugLarge == 0)
                     {
                         quantityWaterJugLarge = jugLarge.Value;
-                        counter += 1;
 
-                        waterJugResponseDto.BucketOne.Bucket = jugLarge.Bucket;
-                        waterJugResponseDto.BucketOne.Value = quantityWaterJugLarge;
-
-                        waterJugResponseDto.BucketTwo.Bucket = jugSmall.Bucket;
-                        waterJugResponseDto.BucketTwo.Value = quantityWaterJugSmall;
-                        waterJugResponseDto.Explanation = $"Fill bucket impar {jugLarge.Bucket}";
+                        string step = "Fill bucket";
+                        SetEvenStep(quantityWaterJugLarge, quantityWaterJugSmall, false, jugLarge, jugSmall, waterJugResponseDto, step);
 
                         waterJugResponseDtoList.Add(waterJugResponseDto);
-
-                        Console.WriteLine($" Paso #{counter} Bucket {jugLarge.Bucket} {quantityWaterJugLarge} Bucket {jugSmall.Bucket} {quantityWaterJugSmall} | Fill bucket {jugLarge.Bucket}\n");
-
                     }
                     else if (quantityWaterJugSmall == jugSmall.Value)
                     {
                         quantityWaterJugSmall = 0;
-                        counter += 1;
 
-                        waterJugResponseDto.BucketOne.Bucket = jugLarge.Bucket;
-                        waterJugResponseDto.BucketOne.Value = quantityWaterJugLarge;
-
-                        waterJugResponseDto.BucketTwo.Bucket = jugSmall.Bucket;
-                        waterJugResponseDto.BucketTwo.Value = quantityWaterJugSmall;
-                        waterJugResponseDto.Explanation = $"Dumb/Pour bucket {jugSmall.Bucket} ";
+                        string step = "Dumb/Pour bucket";
+                        SetEvenStep(quantityWaterJugLarge, quantityWaterJugSmall, false, jugLarge, jugSmall, waterJugResponseDto, step);
 
                         waterJugResponseDtoList.Add(waterJugResponseDto);
-
-                        Console.WriteLine($"Paso #{counter} Pour {jugSmall.Bucket} | {jugSmall.Value} to {quantityWaterJugSmall} \n");
-
                     }
                     else
                     {
@@ -114,17 +103,8 @@ namespace BackendChallenge.Infraestructure.Services
 
                         quantityWaterJugLarge -= cantidad;
                         quantityWaterJugSmall += cantidad;
-                        counter += 1;
 
-                        Console.WriteLine($"Paso #{counter} Bucket {jugLarge.Bucket} {quantityWaterJugLarge} Bucket {jugSmall.Bucket} {quantityWaterJugSmall} Transfer bucket {jugLarge.Bucket} to bucket {jugSmall.Bucket} \n\n");
-
-                        waterJugResponseDto.BucketOne.Bucket = jugLarge.Bucket;
-                        waterJugResponseDto.BucketOne.Value = quantityWaterJugLarge;
-
-                        waterJugResponseDto.BucketTwo.Bucket = jugSmall.Bucket;
-                        waterJugResponseDto.BucketTwo.Value = quantityWaterJugSmall;
-                        waterJugResponseDto.Explanation = $"Transfer bucket {jugLarge.Bucket} to bucket {jugSmall.Bucket}";
-
+                        SetEvenStep(quantityWaterJugLarge, quantityWaterJugSmall, true, jugLarge, jugSmall, waterJugResponseDto);
                         waterJugResponseDtoList.Add(waterJugResponseDto);
                     }
                 }
@@ -133,36 +113,20 @@ namespace BackendChallenge.Infraestructure.Services
                     if (quantityWaterJugLarge == 0)
                     {
                         quantityWaterJugLarge = jugSmall.Value;
-                        counter += 1;
 
-                        waterJugResponseDto.BucketOne.Bucket = jugLarge.Bucket;
-                        waterJugResponseDto.BucketOne.Value = quantityWaterJugSmall;
-
-                        waterJugResponseDto.BucketTwo.Bucket = jugSmall.Bucket;
-                        waterJugResponseDto.BucketTwo.Value = quantityWaterJugLarge;
-                        waterJugResponseDto.Explanation = $"Fill bucket par {jugSmall.Bucket}";
+                        string step = "Fill bucket ";
+                        SetOddStep(quantityWaterJugLarge, quantityWaterJugSmall, false, jugLarge, jugSmall, waterJugResponseDto, step);
 
                         waterJugResponseDtoList.Add(waterJugResponseDto);
-
-                        Console.WriteLine($" Paso #{counter} Bucket {jugSmall.Bucket} {quantityWaterJugLarge} Bucket {jugLarge.Bucket} {quantityWaterJugSmall} | Fill bucket {jugSmall.Bucket}\n");
-
                     }
                     else if (quantityWaterJugSmall == jugLarge.Value)
                     {
                         quantityWaterJugSmall = 0;
-                        counter += 1;
 
-                        waterJugResponseDto.BucketOne.Bucket = jugLarge.Bucket;
-                        waterJugResponseDto.BucketOne.Value = quantityWaterJugSmall;
-
-                        waterJugResponseDto.BucketTwo.Bucket = jugSmall.Bucket;
-                        waterJugResponseDto.BucketTwo.Value = quantityWaterJugLarge;
-                        waterJugResponseDto.Explanation = $"Dumb/Pour bucket {jugSmall.Bucket} ";
+                        string step = "Dumb/Pour bucket ";
+                        SetOddStep(quantityWaterJugLarge, quantityWaterJugSmall, false, jugLarge, jugSmall, waterJugResponseDto, step);
 
                         waterJugResponseDtoList.Add(waterJugResponseDto);
-
-                        Console.WriteLine($"Paso #{counter} Pour {jugLarge.Bucket} | {jugLarge.Value} to {quantityWaterJugSmall} \n");
-
                     }
                     else
                     {
@@ -170,21 +134,12 @@ namespace BackendChallenge.Infraestructure.Services
 
                         quantityWaterJugLarge -= cantidad;
                         quantityWaterJugSmall += cantidad;
-                        counter += 1;
 
-                        Console.WriteLine($"Paso #{counter} Bucket {jugSmall.Bucket} {quantityWaterJugLarge} Bucket {jugLarge.Bucket} {quantityWaterJugSmall} Transfer bucket {jugSmall.Bucket} to bucket {jugLarge.Bucket} \n\n");
-
-                        waterJugResponseDto.BucketOne.Bucket = jugLarge.Bucket;
-                        waterJugResponseDto.BucketOne.Value = quantityWaterJugSmall;
-
-                        waterJugResponseDto.BucketTwo.Bucket = jugSmall.Bucket;
-                        waterJugResponseDto.BucketTwo.Value = quantityWaterJugLarge;
-                        waterJugResponseDto.Explanation = $"Transfer bucket {jugSmall.Bucket} to bucket {jugLarge.Bucket}";
+                        SetOddStep(quantityWaterJugLarge, quantityWaterJugSmall, true, jugLarge, jugSmall, waterJugResponseDto);
 
                         waterJugResponseDtoList.Add(waterJugResponseDto);
                     }
                 }
-
             }
 
             return waterJugResponseDtoList;
