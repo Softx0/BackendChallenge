@@ -15,6 +15,11 @@ namespace BackendChallenge.Application.WaterJug.Handler
 
         public Task<List<WaterJugResponseDto>> Handle(GetSolveWaterJugChallengeQuery request, CancellationToken cancellationToken)
         {
+
+            if ((request.BucketX > request.BucketZ) && (request.BucketY > request.BucketZ))
+                throw new ArgumentException("No Solution");
+
+
             var result = waterJugService.GetSolveWaterJugChallenge(request);
             return result;
         }
