@@ -77,39 +77,9 @@ namespace BackendChallenge.Infraestructure.Services
             {
                 WaterJugResponseDto waterJugResponseDto = new();
 
-                if (!MathematicsUtils.GetEvenOrOddOfMCD(jugLarge, jugSmall))
+                if (MathematicsUtils.GetEvenOrOddOfMCD(jugLarge, jugSmall) || (MathematicsUtils.MCD(jugSmall.Value, getSolveWaterJugChallengeQuery.BucketZ) == jugSmall.Value))
                 {
-                    if (quantityWaterJugLarge == 0)
-                    {
-                        quantityWaterJugLarge = jugLarge.Value;
 
-                        string step = "Fill bucket";
-                        SetEvenStep(quantityWaterJugLarge, quantityWaterJugSmall, false, jugLarge, jugSmall, waterJugResponseDto, step);
-
-                        waterJugResponseDtoList.Add(waterJugResponseDto);
-                    }
-                    else if (quantityWaterJugSmall == jugSmall.Value)
-                    {
-                        quantityWaterJugSmall = 0;
-
-                        string step = "Dumb/Pour bucket";
-                        SetEvenStep(quantityWaterJugLarge, quantityWaterJugSmall, false, jugLarge, jugSmall, waterJugResponseDto, step);
-
-                        waterJugResponseDtoList.Add(waterJugResponseDto);
-                    }
-                    else
-                    {
-                        int cantidad = Math.Min(quantityWaterJugLarge, jugSmall.Value - quantityWaterJugSmall);
-
-                        quantityWaterJugLarge -= cantidad;
-                        quantityWaterJugSmall += cantidad;
-
-                        SetEvenStep(quantityWaterJugLarge, quantityWaterJugSmall, true, jugLarge, jugSmall, waterJugResponseDto);
-                        waterJugResponseDtoList.Add(waterJugResponseDto);
-                    }
-                }
-                else
-                {
                     if (quantityWaterJugLarge == 0)
                     {
                         quantityWaterJugLarge = jugSmall.Value;
@@ -137,6 +107,37 @@ namespace BackendChallenge.Infraestructure.Services
 
                         SetOddStep(quantityWaterJugLarge, quantityWaterJugSmall, true, jugLarge, jugSmall, waterJugResponseDto);
 
+                        waterJugResponseDtoList.Add(waterJugResponseDto);
+                    }
+                }
+                else
+                {
+                    if (quantityWaterJugLarge == 0)
+                    {
+                        quantityWaterJugLarge = jugLarge.Value;
+
+                        string step = "Fill bucket";
+                        SetEvenStep(quantityWaterJugLarge, quantityWaterJugSmall, false, jugLarge, jugSmall, waterJugResponseDto, step);
+
+                        waterJugResponseDtoList.Add(waterJugResponseDto);
+                    }
+                    else if (quantityWaterJugSmall == jugSmall.Value)
+                    {
+                        quantityWaterJugSmall = 0;
+
+                        string step = "Dumb/Pour bucket";
+                        SetEvenStep(quantityWaterJugLarge, quantityWaterJugSmall, false, jugLarge, jugSmall, waterJugResponseDto, step);
+
+                        waterJugResponseDtoList.Add(waterJugResponseDto);
+                    }
+                    else
+                    {
+                        int cantidad = Math.Min(quantityWaterJugLarge, jugSmall.Value - quantityWaterJugSmall);
+
+                        quantityWaterJugLarge -= cantidad;
+                        quantityWaterJugSmall += cantidad;
+
+                        SetEvenStep(quantityWaterJugLarge, quantityWaterJugSmall, true, jugLarge, jugSmall, waterJugResponseDto);
                         waterJugResponseDtoList.Add(waterJugResponseDto);
                     }
                 }
